@@ -1,0 +1,13 @@
+let x = sin(1);;
+let y = cos(1);;
+
+let z = ["missile" :
+  (fun (dtime) {
+     dtime
+  })
+];;
+
+let k = car(z);;
+let j = car(cdr(z));;
+x = j(2.3);;
+	 
