@@ -31,7 +31,7 @@ let resize_image img_surface width height =
   let img_rect = Sdlvideo.get_clip_rect img_surface in
   let img_width = (float width) /. (float Sdlvideo.(img_rect.r_w)) in
   let img_height = (float height) /. (float Sdlvideo.(img_rect.r_h)) in
-  Sdlgfx.zoomSurface img_surface img_width img_height true
+  Sdlgfx.zoomSurface img_surface img_width img_height false
 
                      
 let get_image key_str =
