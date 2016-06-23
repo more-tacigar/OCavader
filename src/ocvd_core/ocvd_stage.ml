@@ -9,7 +9,9 @@ object (self)
   val size = init_size
   val img_surface =
     Ocvd_image_manager.resize_image
-      init_img_surface Ocvd_size.(init_size.w) Ocvd_size.(init_size.h)
+      init_img_surface
+      (int_of_float Ocvd_size.(init_size.w))
+      (int_of_float Ocvd_size.(init_size.h))
 
   method get_size = size
       

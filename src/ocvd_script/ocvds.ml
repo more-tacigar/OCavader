@@ -25,7 +25,7 @@ and ocvds_state = ocvds_environment
 (* Parameter stack *)
                     
 let parameter_stack = Stack.create ()
-
+                                   
 let push_parameter_stack value = Stack.push value parameter_stack
                                    
 let rec push_parameter_stack_by_list value_list =
@@ -35,8 +35,14 @@ let rec push_parameter_stack_by_list value_list =
      Stack.push hd parameter_stack;
      push_parameter_stack_by_list tl
 
-let pop_parameter_stack () = Stack.pop parameter_stack
+                                  
+let pop_parameter_stack () =
+  if Stack.is_empty parameter_stack then
+    Ocvds_nil
+  else
+    Stack.pop parameter_stack
 
+              
 let clear_parameter_stack () = Stack.clear parameter_stack
 
 (* Interpreter *)
@@ -45,6 +51,7 @@ let extend_environment id value env = (id, value) :: env
                                       
 let lookup id env = List.assoc id env
 
+                               
 let rec eval_block explist env =
   match explist with
   | hd :: [] -> eval_expression hd env
@@ -53,6 +60,7 @@ let rec eval_block explist env =
      eval_block tl env
   | _ -> failwith "block error"
 
+                  
 and apply_binary_operation op lhs rhs =
   let open Ocvds_syntax in
   match op, lhs, rhs with
@@ -69,7 +77,8 @@ and apply_binary_operation op lhs rhs =
   | And,   Ocvds_bool   b1, Ocvds_bool   b2 -> Ocvds_bool   (b1 && b2)
   | Or,    Ocvds_bool   b1, Ocvds_bool   b2 -> Ocvds_bool   (b1 || b2)
   | _, _, _ -> failwith "binary operation error"
-                  
+
+                        
 and eval_expression exp env =
   let open Ocvds_syntax in
   match exp with
@@ -86,11 +95,14 @@ and eval_expression exp env =
        | Ocvds_bool (false) -> eval_block fblock env
        | _ -> failwith "cond must be boolean"
      end
+       
   | Let_expression(id, exp, block) ->
      let value = eval_expression exp env in
      eval_block block (extend_environment id (ref value) env)
+                
   | Fun_expression(idlist, block) ->
      Ocvds_closure (Ocvds_function (idlist, block, env))
+                   
   | Apply_expression (id, explist) ->
      let func = lookup id env in
      begin
@@ -107,16 +119,20 @@ and eval_expression exp env =
           value
        | _ -> failwith "function must be function"
      end
+       
   | List_constructor (explist) ->
      Ocvds_list (eval_expression_list explist env)
+                
   | Binary_operation (op, lhs, rhs) ->
      let lvalue = eval_expression lhs env in
      let rvalue = eval_expression rhs env in
      apply_binary_operation op lvalue rvalue
+                            
   | Assign_expression (id, exp) ->
      let value = lookup id env in
      value := eval_expression exp env;
      !value
+
 
 and extend_environment_by_list idlist explist env =
   let newenv = ref env in
@@ -127,12 +143,23 @@ and extend_environment_by_list idlist explist env =
     idlist explist;
   !newenv
 
+
+and extend_environment_by_value_list idlist value_list env =
+  let newenv = ref env in
+  List.iter2
+    (fun id value ->
+      newenv := (id, (ref value)) :: !newenv)
+    idlist value_list;
+  !newenv
+   
+   
 and eval_expression_list explist env =
   match explist with
   | [] -> []
   | hd :: tl ->
      (eval_expression hd env) :: (eval_expression_list tl env)
 
+                                   
 let rec eval_toplevel toplevel env =
   let open Ocvds_syntax in
   match toplevel with
@@ -143,19 +170,22 @@ let rec eval_toplevel toplevel env =
      let value = eval_expression exp env in
      extend_environment id (ref value) env
 
+                        
 and eval_toplevel_list lst env =
   match lst with
   | [] -> env
   | hd :: tl ->
      let newenv = eval_toplevel hd env in
      eval_toplevel_list tl newenv
-                                              
+
+                        
 let eval_program program env =
   let open Ocvds_syntax in
   match program with
   | Program (lst) ->
      eval_toplevel_list lst env
-     
+
+                        
 let create_new_state () = ([] : ocvds_state)
 
 let load_file filename env =
@@ -164,21 +194,72 @@ let load_file filename env =
   let newenv = eval_program result env in
   newenv
 
+    
 let add_global name value env =
   extend_environment name (ref value) env
 
+                     
 let get_global name env =
   let value = lookup name env in
   !value
 
+
+let set_global name env new_value =
+  let value = lookup name env in
+  value := new_value
+
+
+let message_of_object_type value =
+  match value with
+  | Ocvds_nil        -> "nil"
+  | Ocvds_number (n) -> "number : " ^ string_of_float n
+  | Ocvds_string (s) -> "string : " ^ s
+  | Ocvds_bool   (b) -> "bool : " ^ string_of_bool b
+  | Ocvds_list   (l) -> "list"
+  | Ocvds_closure(c) -> "closure"
+             
+             
 let number_of_object value =
   match value with
   | Ocvds_number (n) -> n
-  | _ -> failwith "this is not number"
+  | _ -> failwith ("this is not number " ^ (message_of_object_type value))
 
+                  
+let string_of_object value =
+  match value with
+  | Ocvds_string (str) -> str
+  | _ -> failwith ("this is not string " ^ (message_of_object_type value))
+
+                  
+let bool_of_object value =
+  match value with
+  | Ocvds_bool (b) -> b
+  | _ -> failwith ("this is not bool " ^ (message_of_object_type value))
+
+                  
 let list_of_object value =
   match value with
   | Ocvds_list (lst) -> lst
-  | _ -> failwith "this is not list"
+  | _ -> failwith ("this is not list " ^ (message_of_object_type value))
+
+                  
+let function_of_object value =
+  match value with
+  | Ocvds_closure (cl) -> cl
+  | _ -> failwith ("this is not closure " ^ (message_of_object_type value))
+
+
+let object_of_number n = Ocvds_number (n)
+
+let object_of_string s = Ocvds_string (s)
+
                   
 let create_ocaml_function func = Ocvds_closure (OCaml_function (func))
+
+let call_ocvd_function func value_list =
+  match func with
+  | Ocvds_function (idlist, block, env') ->
+     let new_env = extend_environment_by_value_list
+                     idlist value_list env' in
+     eval_block block new_env
+  | _ -> failwith "this is not ocvds function"

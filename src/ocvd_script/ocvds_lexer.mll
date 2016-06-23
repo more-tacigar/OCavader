@@ -47,9 +47,14 @@ rule main = parse
   | ":"   { Ocvds_parser.COLON    }
   | ","   { Ocvds_parser.COMMA    }
   | eof   { Ocvds_parser.EOF      }
-  | '"' ['a'-'z' 'A'-'Z' '0'-'9']* '"'
-    { Ocvds_parser.STRING_LITERAL (Lexing.lexeme lexbuf) }
-  | ['a'-'z' 'A'-'Z'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+  | '"' ['a'-'z' 'A'-'Z' '0'-'9' '.']* '"'
+    {
+      let str = Lexing.lexeme lexbuf in
+      let len = String.length str in
+      let res = String.sub str 1 (len - 2) in
+      Ocvds_parser.STRING_LITERAL (res)
+    }
+  | ['a'-'z' 'A'-'Z' '@'] ['a'-'z' 'A'-'Z' '0'-'9' '_' '@']*
     {
       let id = Lexing.lexeme lexbuf in
       try

@@ -112,8 +112,12 @@ fun_expression
 	;
 
 apply_expression
-	: IDENTIFIER LPAREN argument_list RPAREN
-	  { Ocvds_syntax.Apply_expression ($1, $3) }
+	: IDENTIFIER LPAREN option(argument_list) RPAREN
+	  {
+	    match $3 with
+	    | None -> Ocvds_syntax.Apply_expression ($1, [])
+	    | Some x -> Ocvds_syntax.Apply_expression ($1, x)
+	  }
 	;
 
 parameter_list

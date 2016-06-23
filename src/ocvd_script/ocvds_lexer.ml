@@ -1,4 +1,4 @@
-# 1 "ocvds_lexer.mll"
+# 1 "ocvd_script/ocvds_lexer.mll"
  
   let reserved_words = [
     ("if"     , Ocvds_parser.IF    ) ;
@@ -14,11 +14,11 @@
     ("nil"    , Ocvds_parser.NIL   ) ;
   ]
 
-# 18 "ocvds_lexer.ml"
+# 18 "ocvd_script/ocvds_lexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base = 
-   "\000\000\078\000\192\000\230\255\231\255\232\255\002\000\003\000\
-    \031\000\033\000\001\000\012\000\242\255\243\255\245\255\036\000\
+   "\000\000\078\000\192\000\230\255\231\255\232\255\002\000\031\000\
+    \033\000\034\000\001\000\012\000\242\255\243\255\245\255\037\000\
     \248\255\249\255\250\255\251\255\252\255\253\255\155\000\165\000\
     \004\000\179\000\011\001\247\255\241\255\240\255\239\255\237\255\
     \235\255\234\255\229\255";
@@ -43,16 +43,16 @@ let __ocaml_lex_tables = {
     \021\000\020\000\013\000\014\000\004\000\023\000\000\000\012\000\
     \022\000\022\000\022\000\022\000\022\000\022\000\022\000\022\000\
     \022\000\022\000\005\000\015\000\009\000\007\000\008\000\033\000\
-    \032\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
-    \001\000\001\000\001\000\019\000\031\000\018\000\030\000\027\000\
-    \000\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
+    \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
+    \001\000\001\000\001\000\019\000\032\000\018\000\031\000\030\000\
+    \027\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\017\000\011\000\016\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
-    \028\000\000\000\000\000\000\000\000\000\000\000\000\000\001\000\
+    \028\000\000\000\000\000\000\000\000\000\000\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
@@ -64,7 +64,7 @@ let __ocaml_lex_tables = {
     \022\000\022\000\022\000\022\000\022\000\022\000\022\000\022\000\
     \022\000\022\000\022\000\022\000\022\000\022\000\022\000\000\000\
     \000\000\000\000\034\000\026\000\026\000\026\000\026\000\026\000\
-    \026\000\026\000\026\000\026\000\026\000\000\000\000\000\000\000\
+    \026\000\026\000\026\000\026\000\026\000\000\000\002\000\000\000\
     \002\000\002\000\002\000\002\000\002\000\002\000\002\000\002\000\
     \002\000\002\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \003\000\002\000\002\000\002\000\002\000\002\000\002\000\002\000\
@@ -110,16 +110,16 @@ let __ocaml_lex_tables = {
     \000\000\000\000\000\000\000\000\000\000\000\000\255\255\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\006\000\
-    \007\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
-    \000\000\000\000\000\000\000\000\008\000\000\000\009\000\015\000\
-    \255\255\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
+    \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
+    \000\000\000\000\000\000\000\000\007\000\000\000\008\000\009\000\
+    \015\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
     \000\000\000\000\000\000\000\000\000\000\000\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
-    \011\000\255\255\255\255\255\255\255\255\255\255\255\255\001\000\
+    \011\000\255\255\255\255\255\255\255\255\255\255\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
     \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
@@ -131,7 +131,7 @@ let __ocaml_lex_tables = {
     \022\000\022\000\022\000\022\000\022\000\023\000\023\000\023\000\
     \023\000\023\000\023\000\023\000\023\000\023\000\023\000\255\255\
     \255\255\255\255\002\000\025\000\025\000\025\000\025\000\025\000\
-    \025\000\025\000\025\000\025\000\025\000\255\255\255\255\255\255\
+    \025\000\025\000\025\000\025\000\025\000\255\255\002\000\255\255\
     \002\000\002\000\002\000\002\000\002\000\002\000\002\000\002\000\
     \002\000\002\000\255\255\255\255\255\255\255\255\255\255\255\255\
     \000\000\002\000\002\000\002\000\002\000\002\000\002\000\002\000\
@@ -187,146 +187,151 @@ let rec main lexbuf =
 and __ocaml_lex_main_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 19 "ocvds_lexer.mll"
+# 19 "ocvd_script/ocvds_lexer.mll"
     ( main lexbuf )
-# 193 "ocvds_lexer.ml"
+# 193 "ocvd_script/ocvds_lexer.ml"
 
   | 1 ->
-# 21 "ocvds_lexer.mll"
+# 21 "ocvd_script/ocvds_lexer.mll"
     (
       let id = Lexing.lexeme lexbuf in
       let number = float_of_string id in
       Ocvds_parser.NUMERIC_LITERAL (number)
     )
-# 202 "ocvds_lexer.ml"
+# 202 "ocvd_script/ocvds_lexer.ml"
 
   | 2 ->
-# 26 "ocvds_lexer.mll"
+# 26 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.LPAREN   )
-# 207 "ocvds_lexer.ml"
+# 207 "ocvd_script/ocvds_lexer.ml"
 
   | 3 ->
-# 27 "ocvds_lexer.mll"
+# 27 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.RPAREN   )
-# 212 "ocvds_lexer.ml"
+# 212 "ocvd_script/ocvds_lexer.ml"
 
   | 4 ->
-# 28 "ocvds_lexer.mll"
+# 28 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.LBRACKET )
-# 217 "ocvds_lexer.ml"
+# 217 "ocvd_script/ocvds_lexer.ml"
 
   | 5 ->
-# 29 "ocvds_lexer.mll"
+# 29 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.RBRACKET )
-# 222 "ocvds_lexer.ml"
+# 222 "ocvd_script/ocvds_lexer.ml"
 
   | 6 ->
-# 30 "ocvds_lexer.mll"
+# 30 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.LBRACE   )
-# 227 "ocvds_lexer.ml"
+# 227 "ocvd_script/ocvds_lexer.ml"
 
   | 7 ->
-# 31 "ocvds_lexer.mll"
+# 31 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.RBRACE   )
-# 232 "ocvds_lexer.ml"
+# 232 "ocvd_script/ocvds_lexer.ml"
 
   | 8 ->
-# 32 "ocvds_lexer.mll"
+# 32 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.SEMISEMI )
-# 237 "ocvds_lexer.ml"
+# 237 "ocvd_script/ocvds_lexer.ml"
 
   | 9 ->
-# 33 "ocvds_lexer.mll"
+# 33 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.SEMI     )
-# 242 "ocvds_lexer.ml"
+# 242 "ocvd_script/ocvds_lexer.ml"
 
   | 10 ->
-# 34 "ocvds_lexer.mll"
+# 34 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.PLUS     )
-# 247 "ocvds_lexer.ml"
+# 247 "ocvd_script/ocvds_lexer.ml"
 
   | 11 ->
-# 35 "ocvds_lexer.mll"
+# 35 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.MINUS    )
-# 252 "ocvds_lexer.ml"
+# 252 "ocvd_script/ocvds_lexer.ml"
 
   | 12 ->
-# 36 "ocvds_lexer.mll"
+# 36 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.MULT     )
-# 257 "ocvds_lexer.ml"
+# 257 "ocvd_script/ocvds_lexer.ml"
 
   | 13 ->
-# 37 "ocvds_lexer.mll"
+# 37 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.DIV      )
-# 262 "ocvds_lexer.ml"
+# 262 "ocvd_script/ocvds_lexer.ml"
 
   | 14 ->
-# 38 "ocvds_lexer.mll"
+# 38 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.OR       )
-# 267 "ocvds_lexer.ml"
+# 267 "ocvd_script/ocvds_lexer.ml"
 
   | 15 ->
-# 39 "ocvds_lexer.mll"
+# 39 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.AND      )
-# 272 "ocvds_lexer.ml"
+# 272 "ocvd_script/ocvds_lexer.ml"
 
   | 16 ->
-# 40 "ocvds_lexer.mll"
+# 40 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.LE       )
-# 277 "ocvds_lexer.ml"
+# 277 "ocvd_script/ocvds_lexer.ml"
 
   | 17 ->
-# 41 "ocvds_lexer.mll"
+# 41 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.LT       )
-# 282 "ocvds_lexer.ml"
+# 282 "ocvd_script/ocvds_lexer.ml"
 
   | 18 ->
-# 42 "ocvds_lexer.mll"
+# 42 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.GE       )
-# 287 "ocvds_lexer.ml"
+# 287 "ocvd_script/ocvds_lexer.ml"
 
   | 19 ->
-# 43 "ocvds_lexer.mll"
+# 43 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.GT       )
-# 292 "ocvds_lexer.ml"
+# 292 "ocvd_script/ocvds_lexer.ml"
 
   | 20 ->
-# 44 "ocvds_lexer.mll"
+# 44 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.EQ       )
-# 297 "ocvds_lexer.ml"
+# 297 "ocvd_script/ocvds_lexer.ml"
 
   | 21 ->
-# 45 "ocvds_lexer.mll"
+# 45 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.NE       )
-# 302 "ocvds_lexer.ml"
+# 302 "ocvd_script/ocvds_lexer.ml"
 
   | 22 ->
-# 46 "ocvds_lexer.mll"
+# 46 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.ASSIGN   )
-# 307 "ocvds_lexer.ml"
+# 307 "ocvd_script/ocvds_lexer.ml"
 
   | 23 ->
-# 47 "ocvds_lexer.mll"
+# 47 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.COLON    )
-# 312 "ocvds_lexer.ml"
+# 312 "ocvd_script/ocvds_lexer.ml"
 
   | 24 ->
-# 48 "ocvds_lexer.mll"
+# 48 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.COMMA    )
-# 317 "ocvds_lexer.ml"
+# 317 "ocvd_script/ocvds_lexer.ml"
 
   | 25 ->
-# 49 "ocvds_lexer.mll"
+# 49 "ocvd_script/ocvds_lexer.mll"
           ( Ocvds_parser.EOF      )
-# 322 "ocvds_lexer.ml"
+# 322 "ocvd_script/ocvds_lexer.ml"
 
   | 26 ->
-# 51 "ocvds_lexer.mll"
-    ( Ocvds_parser.STRING_LITERAL (Lexing.lexeme lexbuf) )
-# 327 "ocvds_lexer.ml"
+# 51 "ocvd_script/ocvds_lexer.mll"
+    (
+      let str = Lexing.lexeme lexbuf in
+      let len = String.length str in
+      let res = String.sub str 1 (len - 2) in
+      Ocvds_parser.STRING_LITERAL (res)
+    )
+# 332 "ocvd_script/ocvds_lexer.ml"
 
   | 27 ->
-# 53 "ocvds_lexer.mll"
+# 58 "ocvd_script/ocvds_lexer.mll"
     (
       let id = Lexing.lexeme lexbuf in
       try
@@ -334,7 +339,7 @@ and __ocaml_lex_main_rec lexbuf __ocaml_lex_state =
       with
       _ -> Ocvds_parser.IDENTIFIER id
     )
-# 338 "ocvds_lexer.ml"
+# 343 "ocvd_script/ocvds_lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_main_rec lexbuf __ocaml_lex_state

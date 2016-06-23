@@ -5,8 +5,8 @@
 
 type t =
   {
-    w : int ;
-    h : int ;
+    w : float ;
+    h : float ;
   }
 
 let create w h =
@@ -17,13 +17,13 @@ let create w h =
     
 let add lhs rhs =
   {
-    w = lhs.w + rhs.w ;
-    h = lhs.w + rhs.h ;
+    w = lhs.w +. rhs.w ;
+    h = lhs.w +. rhs.h ;
   }
 
 let sub lhs rhs =
   {
-    w = lhs.w - rhs.w ;
-    h = lhs.h - rhs.h ;
+    w = lhs.w -. rhs.w ;
+    h = lhs.h -. rhs.h ;
   }
 

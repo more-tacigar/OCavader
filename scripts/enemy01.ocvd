@@ -1,0 +1,16 @@
+@registerEnemy(
+  ["enemy01" :
+   50 :   50 :
+   0  :  0.1 :
+   0  :    0 :
+   "enemy01" :
+   (fun (dtime) {
+     let currentPositionX = @getCurrentPositionX() in {
+     let currentPositionY = @getCurrentPositionY() in {
+     let currentVelocityX = @getCurrentVelocityX() in {
+     let currentVelocityY = @getCurrentVelocityY() in {
+       @setCurrentPositionX(currentPositionX + currentVelocityX * dtime);
+       @setCurrentPositionY(currentPositionY + currentVelocityY * dtime)
+   }}}}})
+]);;
+   

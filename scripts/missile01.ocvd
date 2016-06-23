@@ -1,0 +1,14 @@
+@registerMissile(
+  ["missile01" :
+   20 : 20 :
+    0 : -1 :
+   "missile01" :
+   (fun (dtime) {
+      let currentPositionX = @getCurrentPositionX() in {
+      let currentPositionY = @getCurrentPositionY() in {
+      let currentVelocityX = @getCurrentVelocityX() in {
+      let currentVelocityY = @getCurrentVelocityY() in {
+        @setCurrentPositionX(currentPositionX + currentVelocityX * dtime);
+        @setCurrentPositionY(currentPositionY + currentVelocityY * dtime)
+    }}}}})
+]);;
