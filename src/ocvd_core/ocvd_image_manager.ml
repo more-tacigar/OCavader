@@ -13,7 +13,7 @@ let initialize () =
   let pre_missile_imgs =
     [ "missile01" ] in
   let pre_enemy_imgs =
-    [ "enemy01" ] in
+    [ "enemy01" ; "enemy02" ] in
   let register_img_list name_list =
     ignore(List.map
              (fun pre_name ->

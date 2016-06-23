@@ -39,6 +39,14 @@ object (self)
   method set_velocity new_velocity =
     velocity <- new_velocity
 
+  method set_velocity_x velx =
+    let vely = Ocvd_vector.(velocity.y) in
+    velocity <- Ocvd_vector.create velx vely
+
+  method set_velocity_y vely =
+    let velx = Ocvd_vector.(velocity.x) in
+    velocity <- Ocvd_vector.create velx vely
+
   method set_acceleration new_acceleration =
     acceleration <- new_acceleration
                   

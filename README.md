@@ -1,25 +1,6 @@
-# OCavader Game
+# OCavader
 
-### Dependent
-
-- OCamlSDL
-- Menhir
-
-### How to build
-
-```
-$ cd src
-$ make
-```
-
-### How to play
-
-```
-$ cd bin
-$ cd ./ocavader
-```
-
-### How to extend OCavader
-
-Put your OCVD script on scripts directory.  
+OCavaderはOCamlの勉強のために作成したインベーダーゲーム風のシューティングゲームです。  
+OCavader Scriptという独自のスクリプトエンジンを搭載しており、拡張可能です。  
+暇を持て余しすぎていて、物好きすぎる人はどうぞよろしくお願いいたします。  
 

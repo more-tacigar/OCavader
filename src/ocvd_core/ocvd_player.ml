@@ -9,7 +9,7 @@ class ocvd_player (init_position    : Ocvd_vector.t    )
                   (init_size        : Ocvd_size.t      )
                   (init_img_surface : Sdlvideo.surface ) =
   (* move distance when keyboard pressed 1 time *)
-  let move_distance = 2. in
+  let move_distance = 8. in
   
 object (self)
   inherit ocvd_object init_position init_size init_img_surface as super

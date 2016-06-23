@@ -25,7 +25,53 @@ let update game dtime =
   List.iter (fun player_missile -> player_missile#update dtime)
             game.player_missiles;
   List.iter (fun enemy -> enemy#update dtime)
-            game.enemies
+            game.enemies;
+  (* delete enemy phase *)
+  let new_enemies =
+    List.filter
+      (fun enemy ->
+        let epos  = enemy#get_position in
+        let esize = enemy#get_size in
+        let epx0  = Ocvd_vector.(epos.x) in
+        let epy0  = Ocvd_vector.(epos.y) in
+        let epx1  = epx0 +. Ocvd_size.(esize.w) in
+        let epy1  = epy0 +. Ocvd_size.(esize.h) in
+        not
+          (List.exists
+             (fun player_missile ->
+               let mpos  = player_missile#get_position in
+               let msize = player_missile#get_size in
+               let mpx0  = Ocvd_vector.(mpos.x) in
+               let mpy0  = Ocvd_vector.(mpos.y) in
+               let mpx1  = mpx0 +. Ocvd_size.(msize.w) in
+               let mpy1  = mpy0 +. Ocvd_size.(msize.h) in
+               epx0 < mpx1 && mpx0 < epx1 && epy0 < mpy1 && mpy0 < epy1)
+             game.player_missiles))
+      game.enemies
+  in
+  (* delete enemies and missiles in out of window *)
+  let new_enemies =
+    List.filter
+      (fun enemy ->
+        let epos = enemy#get_position in
+        let epx  = Ocvd_vector.(epos.x) in
+        let epy  = Ocvd_vector.(epos.y) in
+        not (epx >= 700. || epx <= -100. || epy >= 900. || epy <= -100.))
+      new_enemies
+  in
+  let new_missiles =
+    List.filter
+      (fun player_missile ->
+        let mpos = player_missile#get_position in
+        let mpx  = Ocvd_vector.(mpos.x) in
+        let mpy  = Ocvd_vector.(mpos.y) in
+        not (mpx >= 700. || mpx <= -100. || mpy >= 900. || mpy <= -100.))
+      game.player_missiles
+  in
+  game.enemies <- new_enemies;
+  game.player_missiles <- new_missiles
+  
+           
 
 
 let generate_random_enemy () =

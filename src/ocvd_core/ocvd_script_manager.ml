@@ -78,6 +78,21 @@ let get_current_velocity_y state =
      Ocvds.push_parameter_stack (Ocvds.object_of_number vely)
 
 
+let set_current_velocity_x state =
+  match !current_object with
+  | None -> ()
+  | Some obj ->
+     let value = Ocvds.pop_parameter_stack () in
+     obj#set_velocity_x (Ocvds.number_of_object value)
+
+let set_current_velocity_y state =
+  match !current_object with
+  | None -> ()
+  | Some obj ->
+     let value = Ocvds.pop_parameter_stack () in
+     obj#set_velocity_y (Ocvds.number_of_object value)
+                                
+                                
                                 
 let call_ocvds_function f value_list =
   Ocvds.call_ocvd_function f value_list
@@ -111,10 +126,15 @@ let initialize () =
   env := Ocvds.add_global "@setCurrentPositionY"
                           (Ocvds.create_ocaml_function set_current_position_y)
                           !env;
-
+  env := Ocvds.add_global "@setCurrentVelocityX"
+                          (Ocvds.create_ocaml_function set_current_velocity_x)
+                          !env;
+  env := Ocvds.add_global "@setCurrentVelocityY"
+                          (Ocvds.create_ocaml_function set_current_velocity_y)
+                          !env;
   
   (* load all files in resource directory *)
   env := Ocvds.load_file "../scripts/missile01.ocvd" !env;
   env := Ocvds.load_file "../scripts/enemy01.ocvd" !env;
-  
+  env := Ocvds.load_file "../scripts/enemy02.ocvd" !env
   
