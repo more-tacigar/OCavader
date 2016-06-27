@@ -1,6 +1,21 @@
 # OCavader
 
-OCavaderはOCamlの勉強のために作成したインベーダーゲーム風のシューティングゲームです。  
-OCavader Scriptという独自のスクリプトエンジンを搭載しており、拡張可能です。  
-暇を持て余しすぎていて、物好きすぎる人はどうぞよろしくお願いいたします。  
+## Depends
 
+- SDL/OCamlSDL
+- Menhir
+
+## Build
+
+srcディレクトリでmakeすれば、同じディレクトリ内にocavader.nativeが生成されるのでそれを実行してください。  
+
+## ディレクトリ構成
+
+- src
+コアのプログラム、スクリプト関係、ユーティリティーがある
+
+- scripts
+敵と玉を制御するスクリプト
+
+- resources
+絵
