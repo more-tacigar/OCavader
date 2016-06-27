@@ -1,5 +1,7 @@
 # OCavader
 
+<img src="./sample.png" width="320px">
+
 ## Depends
 
 - SDL/OCamlSDL
