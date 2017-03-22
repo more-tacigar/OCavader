@@ -1,4 +1,6 @@
-# OCavader
+# OCavader - A Shooting Game Equipped with an Original Script Engine.
+
+おりじなるすくりぷとなしゅーてぃんぐげーむ。
 
 <img src="./sample.png" width="320px">
 
